@@ -40,6 +40,17 @@ namespace BarcodeScanner.Mobile
 
                 _lastRunTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
 
+                if (_cameraView.IsImageCapture && _cameraView.IsScanning)
+                {
+                    var imageData = Array.Empty<byte>();
+                    imageData = NV21toJPEG(YUV_420_888toNV21(mediaImage), mediaImage.Width, mediaImage.Height);
+                    imageData = RotateJpeg(imageData, GetImageRotationCorrectionDegrees());
+
+                    _cameraView.OnImageCaptured();
+                    _cameraView.TriggerOnDetected([], imageData);
+                    return;
+                }
+
                 if (_lastRunTime - _lastAnalysisTime > _cameraView.ScanInterval && _cameraView.IsScanning)
                 {
                     _lastAnalysisTime = _lastRunTime;
@@ -47,6 +58,13 @@ namespace BarcodeScanner.Mobile
 
                     List<BarcodeResult> barcodeFinalResult = null;
                     OCRResult ocrFinalResult = null;
+                    var imageData = Array.Empty<byte>();
+
+                    if (_cameraView.ReturnBarcodeImage || _cameraView.IsImageCapture)
+                    {
+                        imageData = NV21toJPEG(YUV_420_888toNV21(mediaImage), mediaImage.Width, mediaImage.Height);
+                        imageData = RotateJpeg(imageData, GetImageRotationCorrectionDegrees());
+                    }
 
                     // Pass image to the scanner and have it do its thing
                     if (_cameraView.IsOCR)
@@ -66,13 +84,6 @@ namespace BarcodeScanner.Mobile
 
                     if (!_cameraView.IsScanning)
                         return;
-
-                    var imageData = Array.Empty<byte>();
-                    if (_cameraView.ReturnBarcodeImage)
-                    {
-                        imageData = NV21toJPEG(YUV_420_888toNV21(mediaImage), mediaImage.Width, mediaImage.Height);
-                        imageData = RotateJpeg(imageData, GetImageRotationCorrectionDegrees());
-                    }
 
                     _cameraView.IsScanning = false;
                     _cameraView.TriggerOnDetected(ocrFinalResult, barcodeFinalResult, imageData);

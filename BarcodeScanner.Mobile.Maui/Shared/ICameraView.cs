@@ -34,6 +34,11 @@ namespace BarcodeScanner.Mobile
         /// When enabled we are performing text scanning (OCR) instead of barcode scanning.
         /// </summary>
         bool IsOCR { get; set; }
+
+        public bool IsImageCapture { get; }
+        public void CaptureImage();
+        public void OnImageCaptured();
+
         public static BindableProperty TorchOnProperty { get; set; }
         /// <summary>
         /// Disables or enables torch

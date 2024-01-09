@@ -174,6 +174,17 @@ namespace BarcodeScanner.Mobile
             });
         }
 
+        public bool IsImageCapture { get; private set; }
+        public void CaptureImage()
+        {
+            IsImageCapture = true;
+        }
+
+        public void OnImageCaptured()
+        {
+            IsImageCapture = false;
+        }
+
         public CameraView()
         {
             this.Unloaded += CameraView_Unloaded;
