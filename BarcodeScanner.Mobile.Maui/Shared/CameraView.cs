@@ -175,29 +175,7 @@ namespace BarcodeScanner.Mobile
         }
 
         public bool IsImageCapture { get; private set; }
-        public void CaptureImage()
-        {
-            IsImageCapture = true;
-        }
-
-        public void OnImageCaptured()
-        {
-            IsImageCapture = false;
-        }
-
-        public CameraView()
-        {
-            this.Unloaded += CameraView_Unloaded;
-        }
-        /// <summary>
-        /// Due to DisconnectHandler has to be called manually...we do it when the Window unloaded
-        /// https://github.com/dotnet/maui/issues/3604
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CameraView_Unloaded(object sender, EventArgs e)
-        {
-            Handler?.DisconnectHandler();
-        }
+        public void CaptureImage() => IsImageCapture = true;
+        public void OnImageCaptured() => IsImageCapture = false;
     }
 }
