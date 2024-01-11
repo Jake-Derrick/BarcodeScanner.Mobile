@@ -18,6 +18,7 @@ namespace BarcodeScanner.Mobile
         {
             [nameof(ICameraView.TorchOn)] = (handler, virtualView) => handler.HandleTorch(),
 #if ANDROID
+            [nameof(ICameraView.Zoom)] = (handler, virtualView) => handler.HandleZoom(),
             [nameof(ICameraView.CameraFacing)] = (handler, virtualView) => handler.CameraCallback(),
             [nameof(ICameraView.CaptureQuality)] = (handler, virtualView) => handler.CameraCallback()
 #elif IOS

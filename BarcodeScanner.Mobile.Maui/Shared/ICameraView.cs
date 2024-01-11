@@ -45,6 +45,12 @@ namespace BarcodeScanner.Mobile
         /// </summary>
         public bool TorchOn { get; set; }
 
+        public static BindableProperty ZoomPropery { get; set; }
+        /// <summary>
+        /// Camera zoom level
+        /// </summary>
+        public float Zoom { get; set; }
+
         public static BindableProperty CameraFacingProperty { get; set; }
         /// <summary>
         /// Select Back or Front camera.

@@ -94,6 +94,7 @@ namespace BarcodeScanner.Mobile
                 _camera = cameraProvider.BindToLifecycle(lifecycleOwner, cameraSelector, preview, imageAnalyzer);
 
                 HandleTorch();
+                HandleZoom();
                 HandleAutoFocus();
             }
             catch (Exception exc)
@@ -161,6 +162,17 @@ namespace BarcodeScanner.Mobile
             if (_camera == null || !_camera.CameraInfo.HasFlashUnit) return;
 
             _camera.CameraControl.EnableTorch(VirtualView.TorchOn);
+        }
+
+        private void HandleZoom()
+        {
+            if (_camera == null) return;
+
+            try
+            {
+                _camera.CameraControl.SetZoomRatio(VirtualView.Zoom);
+            }
+            catch (IllegalArgumentException) {/*Zoom not in range, no update made*/ }
         }
 
         private void DisableTorchIfNeeded()

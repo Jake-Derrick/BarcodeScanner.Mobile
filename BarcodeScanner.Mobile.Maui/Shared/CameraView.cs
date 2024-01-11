@@ -120,6 +120,22 @@ namespace BarcodeScanner.Mobile
             set => SetValue(TorchOnProperty, value);
         }
 
+        public static BindableProperty ZoomProperty = BindableProperty.Create(nameof(Zoom)
+            , typeof(float)
+            , typeof(CameraView)
+            , 1f
+            , defaultBindingMode: BindingMode.TwoWay
+            , propertyChanged: (bindable, value, newValue) => ((CameraView)bindable).Zoom = (float)newValue);
+
+        /// <summary>
+        /// Camera zoom level
+        /// </summary>
+        public float Zoom
+        {
+            get => (float)GetValue(ZoomProperty);
+            set => SetValue(ZoomProperty, value);
+        }
+
         public static BindableProperty CameraFacingProperty = BindableProperty.Create(nameof(CameraFacing)
             , typeof(CameraFacing)
             , typeof(CameraView)
