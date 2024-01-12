@@ -42,12 +42,18 @@ namespace BarcodeScanner.Mobile
 
                 if (_cameraView.IsImageCapture && _cameraView.IsScanning)
                 {
-                    var imageData = Array.Empty<byte>();
-                    imageData = NV21toJPEG(YUV_420_888toNV21(mediaImage), mediaImage.Width, mediaImage.Height);
-                    imageData = RotateJpeg(imageData, GetImageRotationCorrectionDegrees());
+                    // Save the Image data so we can close the image and move on without having the background task affected
+                    var imageHeight = mediaImage.Height;
+                    var imageWidth = mediaImage.Width;
+                    var imageBytes = YUV_420_888toNV21(mediaImage);
 
+                    // Running in the background as this takes a bit of time and we want to be able to capture another image asap
+                    _ = Task.Run(() =>
+                    {
+                        var imageData = RotateJpeg(NV21toJPEG(imageBytes, imageWidth, imageHeight), GetImageRotationCorrectionDegrees());
+                        _cameraView.TriggerOnDetected([], imageData);
+                    });
                     _cameraView.OnImageCaptured();
-                    _cameraView.TriggerOnDetected([], imageData);
                     return;
                 }
 
@@ -125,7 +131,6 @@ namespace BarcodeScanner.Mobile
             yBuffer.Get(nv21, 0, ySize);
             vBuffer.Get(nv21, ySize, vSize);
             uBuffer.Get(nv21, ySize + vSize, uSize);
-
             return nv21;
         }
 

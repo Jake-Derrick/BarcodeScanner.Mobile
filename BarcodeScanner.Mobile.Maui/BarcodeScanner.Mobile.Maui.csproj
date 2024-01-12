@@ -19,9 +19,9 @@
 		<RootNamespace>BarcodeScanner.Mobile.Maui</RootNamespace>
 
 		<Product></Product>
-		<AssemblyVersion>8.0.0.1</AssemblyVersion>
-		<AssemblyFileVersion>8.0.0.1</AssemblyFileVersion>
-		<Version>8.0.0.1</Version>
+		<AssemblyVersion>8.0.0.4</AssemblyVersion>
+		<AssemblyFileVersion>8.0.0.4</AssemblyFileVersion>
+		<Version>8.0.0.4</Version>
 		<NeutralLanguage>en</NeutralLanguage>
 
 		<!--Version of C# to use -->
@@ -30,14 +30,15 @@
 		<Authors>Jimmy Pun, Anton Yaroshenko</Authors>
 		<Description>Powerful MAUI barcode scanning library using GoogleVision API for Android and iOS.</Description>
 		<PackageIconUrl>https://banner2.kisspng.com/20180713/olo/kisspng-nuget-net-framework-package-manager-software-repo-nuget-5b487dc3ba81a7.452233091531477443764.jpg</PackageIconUrl>
-		<RepositoryUrl>https://github.com/JimmyPun610/BarcodeScanner.Mobile</RepositoryUrl>
-		<PackageProjectUrl>https://github.com/JimmyPun610/BarcodeScanner.Mobile</PackageProjectUrl>
-		<PackageLicenseUrl>https://github.com/JimmyPun610/BarcodeScanner.Mobile</PackageLicenseUrl>
+		<RepositoryUrl>https://github.com/Jake-Derrick/BarcodeScanner.Mobile</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/Jake-Derrick/BarcodeScanner.Mobile</PackageProjectUrl>
+		<PackageLicenseUrl>https://github.com/Jake-Derrick/BarcodeScanner.Mobile</PackageLicenseUrl>
 		<RepositoryType></RepositoryType>
 		<PackageTags>MAUI Barcode Scanning Tools</PackageTags>
-		<PackageReleaseNotes>1. Merged pull request #213, #216 </PackageReleaseNotes>
+		<PackageReleaseNotes>Added CaptureImage</PackageReleaseNotes>
 		<Copyright>Copyright 2023</Copyright>
 		<PackOnBuild>true</PackOnBuild>
+		<PackageId>$(AssemblyName).Jake</PackageId>
 	</PropertyGroup>
 
 
