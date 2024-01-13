@@ -2,6 +2,7 @@ using Android.Graphics;
 using Android.Runtime;
 using Android.Util;
 using AndroidX.Camera.Core;
+using AndroidX.Camera.Core.Internal.Utils;
 using Java.Nio;
 using Xamarin.Google.MLKit.Vision.BarCode;
 using Xamarin.Google.MLKit.Vision.Common;
@@ -42,17 +43,8 @@ namespace BarcodeScanner.Mobile
 
                 if (_cameraView.IsImageCapture && _cameraView.IsScanning)
                 {
-                    // Save the Image data so we can close the image and move on without having the background task affected
-                    var imageHeight = mediaImage.Height;
-                    var imageWidth = mediaImage.Width;
-                    var imageBytes = YUV_420_888toNV21(mediaImage);
-
-                    // Running in the background as this takes a bit of time and we want to be able to capture another image asap
-                    _ = Task.Run(() =>
-                    {
-                        var imageData = RotateJpeg(NV21toJPEG(imageBytes, imageWidth, imageHeight), GetImageRotationCorrectionDegrees());
-                        _cameraView.TriggerOnDetected([], imageData);
-                    });
+                    var bytes = ImageUtil.YuvImageToJpegByteArray(proxy, new Android.Graphics.Rect(0, 0, mediaImage.Width, mediaImage.Height), 100, GetImageRotationCorrectionDegrees());
+                    _cameraView.TriggerOnDetected([], bytes);
                     _cameraView.OnImageCaptured();
                     return;
                 }
