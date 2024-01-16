@@ -5,8 +5,8 @@ using Vision;
 
 namespace BarcodeScanner.Mobile
 {
-	public class OCRMethods
-	{
+    public class OCRMethods
+    {
 
         static OCRResult ProcessResult(VNRequest result)
         {
@@ -18,16 +18,16 @@ namespace BarcodeScanner.Mobile
             if (!result.GetResults<VNRecognizedTextObservation>().Any())
                 return ocrResult;
 
-            foreach(var o in result.GetResults<VNRecognizedTextObservation>())
+            foreach (var o in result.GetResults<VNRecognizedTextObservation>())
             {
                 var topCandidate = o.TopCandidates(1).First();
                 ocrResult.AllText += " " + topCandidate.String;
-                ocrResult.Lines.Add(topCandidate.String);
+                //ocrResult.Lines.Add(topCandidate.String);
 
-                topCandidate.String.Split(" ").ToList().ForEach(e =>
-                {
-                    ocrResult.Elements.Add(new OCRResult.OCRElement { Text = e, Confidence = topCandidate.Confidence });
-                });
+                //topCandidate.String.Split(" ").ToList().ForEach(e =>
+                //{
+                //    ocrResult.Elements.Add(new OCRResult.OCRElement { Text = e, Confidence = topCandidate.Confidence });
+                //});
 
             }
 
