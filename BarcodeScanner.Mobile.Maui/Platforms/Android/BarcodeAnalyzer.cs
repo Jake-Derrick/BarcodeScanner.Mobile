@@ -43,9 +43,10 @@ namespace BarcodeScanner.Mobile
 
                 if (_cameraView.IsImageCapture && _cameraView.IsScanning)
                 {
-                    var bytes = ImageUtil.YuvImageToJpegByteArray(proxy, new Android.Graphics.Rect(0, 0, mediaImage.Width, mediaImage.Height), 100, GetImageRotationCorrectionDegrees());
+                    var bytes = ImageUtil.YuvImageToJpegByteArray(proxy, new Android.Graphics.Rect(0, 0, mediaImage.Width, mediaImage.Height), 100, proxy.ImageInfo.RotationDegrees);
                     _cameraView.TriggerOnDetected([], bytes);
                     _cameraView.OnImageCaptured();
+                    SafeCloseImageProxy(proxy);
                     return;
                 }
 
@@ -57,12 +58,6 @@ namespace BarcodeScanner.Mobile
                     List<BarcodeResult> barcodeFinalResult = null;
                     OCRResult ocrFinalResult = null;
                     var imageData = Array.Empty<byte>();
-
-                    if (_cameraView.ReturnBarcodeImage || _cameraView.IsImageCapture)
-                    {
-                        imageData = NV21toJPEG(YUV_420_888toNV21(mediaImage), mediaImage.Width, mediaImage.Height);
-                        imageData = RotateJpeg(imageData, GetImageRotationCorrectionDegrees());
-                    }
 
                     // Pass image to the scanner and have it do its thing
                     if (_cameraView.IsOCR)
